@@ -1,8 +1,9 @@
-/*#include <bits/stdc++.h>
+#include <bits/stdc++.h>
 #define DEBUG
 using namespace std;
 
-struct pp {
+struct pp
+{
     int cultura;
     int index;
     vector <pp> seguaci;
@@ -12,7 +13,11 @@ int T, N, sol;
 vector <int> R, C;
 queue <pp*> q;
 
-void analizza (pp p) {
+void analizza (pp p)
+{
+    cout << "a" << p.index << endl;
+    for (size_t i = 0; i < p.seguaci.size(); ++i)
+        cout << p.seguaci[i].seguaci.size();
     for (size_t i = 0; i < p.seguaci.size(); ++i)
         if (p.seguaci[i].seguaci.size() != 0)
             analizza(p.seguaci[i]);
@@ -23,7 +28,8 @@ void analizza (pp p) {
         if (p.seguaci[i].cultura > max_)
             max_ = p.seguaci[i].cultura;
 
-    if (max_ != p.cultura) {
+    if (max_ != p.cultura)
+    {
         sol++;
         p.cultura = max_;
         p.seguaci.empty();
@@ -31,7 +37,8 @@ void analizza (pp p) {
     }
 }
 
-int main() {
+int main()
+{
     freopen("input.txt", "r", stdin);
 #ifndef DEBUG
     freopen("output.txt", "w", stdout);
@@ -39,16 +46,19 @@ int main() {
 
     cin >> T;
 
-    for (size_t t = 0; t < T; ++t) {
+    for (size_t t = 0; t < T; ++t)
+    {
         cin >> N;
         R.resize(N);
         C.resize(N);
         sol = 0;
         pp core;
 
-        for(size_t i = 0; i < N; ++i) {
+        for(size_t i = 0; i < N; ++i)
+        {
             cin >> R[i] >> C[i];
-            if (R[i] == -1) {
+            if (R[i] == -1)
+            {
                 core.cultura = C[i];
                 core.index = i;
             }
@@ -60,39 +70,38 @@ int main() {
         {
             pp* tmp = q.front();
             q.pop();
-            cout << endl << endl << tmp->index << endl << endl;
+            //cout << endl << endl << tmp->index << endl << endl;
 
-            for(size_t i = 0; i < N; ++i) {
-                cout << tmp->index << "\t" << R[i] << endl;
+            for(size_t i = 0; i < N; ++i)
+            {
+                //cout << tmp->index << "\t" << R[i] << endl;
                 if (R[i] == tmp->index)
                 {
-                    // Problema:
-                    cout << "index " << tmp->index << "\t" << i << endl;
-                    cout << "cultura " << tmp->cultura << "\t" << C[i] << endl;
-                    pp persona2;
-                    persona2.index = i;
-                    persona2.cultura = C[i];
-                    cout << "index " << tmp->index << "\t" << persona2.index << endl;
-                    cout << "cultura " << tmp->cultura << "\t" << persona2.cultura << endl;
+                    pp* persona2 = new pp;
+                    persona2->index = i;
+                    persona2->cultura = C[i];
+                    //cout << "index " << tmp->index << "\t" << persona2->index << endl;
+                    //cout << "cultura " << tmp->cultura << "\t" << persona2->cultura << endl;
 
-                    tmp->seguaci.push_back(persona2);
-                    q.push(&persona2);
+                    tmp->seguaci.push_back(*persona2);
+                    q.push(persona2);
                 }
             }
         }
-        cout << core.seguaci[0].index << endl;
-        cout << core.seguaci[1].index << endl;
+        cout << core.seguaci[0].seguaci.size() << endl;
+        cout << core.seguaci[1].seguaci.size() << endl;
 
         analizza(core);
 
         cout << "Case #" << t + 1 << ": " << sol << endl;
     }
-}*/
+}
+    /*
 
-#include <bits/stdc++.h>
-using namespace std;
+    #include <bits/stdc++.h>
+    using namespace std;
 
-int main() {
+    int main() {
 
     freopen("gerarchie_input_1.txt", "r", stdin);
     freopen("gerarchie_output_1.txt", "w", stdout);
@@ -132,4 +141,5 @@ int main() {
 
         cout << "Case #" << t << ": " << sol << endl;
     }
-}
+    }
+    */
